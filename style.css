@@ -1,0 +1,370 @@
+/* Color variables */
+:root {
+    --bg:          #1a1512;
+    --surface:     #211c18;
+    --card:        #271f1a;
+    --border:      #3a2e26;
+    --border-dim:  #2c2319;
+    --accent:      #c4a882;
+    --accent-soft: #a8845f;
+    --text:        #e8ddd3;
+    --text-dim:    #9e8c7c;
+    --text-faint:  #5c4f43;
+    --input-bg:    #1e1812;
+    --radius:      10px;
+}
+
+/* Remove default browser spacing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page background */
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Jost', sans-serif;
+    position: relative;
+}
+
+/* Grain texture on the background */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Corner bracket decorations */
+.corner-tl,
+.corner-br {
+    position: fixed;
+    width: 72px;
+    height: 72px;
+    pointer-events: none;
+}
+
+.corner-tl {
+    top: 28px;
+    left: 28px;
+    border-top: 1px solid var(--border-dim);
+    border-left: 1px solid var(--border-dim);
+}
+
+.corner-br {
+    bottom: 28px;
+    right: 28px;
+    border-bottom: 1px solid var(--border-dim);
+    border-right: 1px solid var(--border-dim);
+}
+
+/* Login card */
+.card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 50px 44px 44px;
+    position: relative;
+    animation: emerge 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Card slide up animation */
+@keyframes emerge {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Title section */
+.form-header {
+    margin-bottom: 34px;
+    animation: fadeUp 0.5s 0.08s both;
+}
+
+.form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.form-sub {
+    font-size: 13px;
+    color: var(--text-faint);
+    font-weight: 300;
+    text-align: center;
+}
+
+/* Input field wrapper */
+.field {
+    margin-bottom: 16px;
+}
+
+.field:nth-of-type(1) { animation: fadeUp 0.5s 0.15s both; }
+.field:nth-of-type(2) { animation: fadeUp 0.5s 0.20s both; }
+.field:last-of-type   { animation: fadeUp 0.5s 0.32s both; }
+
+/* Label above each input */
+.field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    margin-bottom: 8px;
+}
+
+/* Input box */
+.field input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius);
+    padding: 13px 15px;
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+/* Placeholder text */
+.field input::placeholder {
+    color: var(--text-faint);
+}
+
+/* Input when clicked */
+.field input:focus {
+    border-color: var(--accent-soft);
+    box-shadow: 0 0 0 3px rgba(168, 132, 95, 0.1);
+}
+
+/* Remember me and forgot password row */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    animation: fadeUp 0.5s 0.26s both;
+}
+
+/* Remember me label */
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-faint);
+    user-select: none;
+}
+
+/* Custom checkbox */
+.remember input[type="checkbox"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+/* Checkbox when ticked */
+.remember input[type="checkbox"]:checked {
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
+}
+
+/* Checkmark inside the checkbox */
+.remember input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border: 1.5px solid var(--bg);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+}
+
+/* Forgot password link */
+.forgot-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-link:hover {
+    color: var(--text);
+}
+
+/* Sign in button */
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent-soft);
+    color: #14100c;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Jost', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(140, 100, 60, 0.22);
+}
+
+.login-btn:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 26px rgba(140, 100, 60, 0.3);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+/* Divider line with "or continue with" */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    color: var(--text-faint);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    animation: fadeUp 0.5s 0.36s both;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-dim);
+}
+
+/* Social buttons group */
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 26px;
+    animation: fadeUp 0.5s 0.40s both;
+}
+
+/* Each social button */
+.social-btn {
+    width: 100%;
+    padding: 11px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius);
+    color: var(--text-dim);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+}
+
+.social-btn:hover {
+    background: #2d251f;
+    border-color: var(--border);
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
+.social-btn:active {
+    transform: translateY(0);
+}
+
+/* All logo images */
+.social-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    mix-blend-mode: screen;
+}
+
+/* Google — keep original colors */
+.logo-google {
+    filter: none;
+}
+
+/* GitHub — invert so white logo shows on dark bg */
+.logo-github {
+    filter: invert(1);
+}
+
+/* Apple — invert so white logo shows on dark bg */
+.logo-apple {
+    filter: invert(1);
+}
+
+/* Sign up link */
+.signup-link {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-faint);
+    animation: fadeUp 0.5s 0.44s both;
+}
+
+.signup-link a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.signup-link a:hover {
+    color: var(--text);
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
