@@ -28,6 +28,16 @@
             <p class="form-sub">Enter your credentials to continue</p>
         </div>
 
+        <!-- Success message (hidden by default) -->
+        <div class="message success" id="successMsg">
+            ✓ Login successful! Welcome back.
+        </div>
+
+        <!-- Error message (hidden by default) -->
+        <div class="message error" id="errorMsg">
+            ✗ Invalid email or password.
+        </div>
+
         <!-- Email field -->
         <div class="field">
             <label for="email">Email address</label>
@@ -36,8 +46,9 @@
                 id="email"
                 name="email"
                 placeholder="you@example.com"
-                required
             >
+            <!-- Email error message -->
+            <span class="field-error" id="emailError"></span>
         </div>
 
         <!-- Password field -->
@@ -48,8 +59,9 @@
                 id="password"
                 name="password"
                 placeholder="••••••••"
-                required
             >
+            <!-- Password error message -->
+            <span class="field-error" id="passwordError"></span>
         </div>
 
         <!-- Remember me and Forgot password -->
@@ -63,7 +75,7 @@
 
         <!-- Sign in button -->
         <div class="field">
-            <button type="submit" class="login-btn">Sign in</button>
+            <button type="submit" class="login-btn" onclick="handleLogin()">Sign in</button>
         </div>
 
         <!-- Divider -->
@@ -97,6 +109,146 @@
         </div>
 
     </div>
+
+    <!-- JavaScript for validation and authentication -->
+    <script>
+
+        /* ------------------------------------------------
+           HARDCODED LOGIN CREDENTIALS
+           Change these to whatever you want
+        ------------------------------------------------ */
+        const CORRECT_EMAIL    = "user@example.com";
+        const CORRECT_PASSWORD = "password123";
+
+
+        /* ------------------------------------------------
+           MAIN LOGIN FUNCTION
+           Runs when the Sign in button is clicked
+        ------------------------------------------------ */
+        function handleLogin() {
+
+            /* Get what the user typed */
+            const email    = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            /* Clear all old messages first */
+            clearMessages();
+
+            /* Step 1: Validate the fields */
+            const isValid = validateFields(email, password);
+
+            /* Step 2: If validation passes, check credentials */
+            if (isValid) {
+                checkCredentials(email, password);
+            }
+        }
+
+
+        /* ------------------------------------------------
+           VALIDATION
+           Checks if fields are empty or incorrectly filled
+        ------------------------------------------------ */
+        function validateFields(email, password) {
+
+            let valid = true;
+
+            /* Check if email is empty */
+            if (email === "") {
+                showFieldError("emailError", "Email address is required.");
+                highlightInput("email");
+                valid = false;
+
+            /* Check if email format is correct (must have @ and .) */
+            } else if (!email.includes("@") || !email.includes(".")) {
+                showFieldError("emailError", "Please enter a valid email address.");
+                highlightInput("email");
+                valid = false;
+            }
+
+            /* Check if password is empty */
+            if (password === "") {
+                showFieldError("passwordError", "Password is required.");
+                highlightInput("password");
+                valid = false;
+
+            /* Check if password is at least 6 characters */
+            } else if (password.length < 6) {
+                showFieldError("passwordError", "Password must be at least 6 characters.");
+                highlightInput("password");
+                valid = false;
+            }
+
+            return valid;
+        }
+
+
+        /* ------------------------------------------------
+           AUTHENTICATION
+           Checks if email and password match the hardcoded ones
+        ------------------------------------------------ */
+        function checkCredentials(email, password) {
+
+            if (email === CORRECT_EMAIL && password === CORRECT_PASSWORD) {
+                /* Correct — show success message */
+                showSuccess();
+            } else {
+                /* Wrong — show error message */
+                showError();
+            }
+        }
+
+
+        /* ------------------------------------------------
+           HELPER FUNCTIONS
+           Small functions to show/hide messages
+        ------------------------------------------------ */
+
+        /* Show error under a field */
+        function showFieldError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = "block";
+        }
+
+        /* Add red border to an input */
+        function highlightInput(inputId) {
+            const input = document.getElementById(inputId);
+            input.classList.add("input-error");
+        }
+
+        /* Show the green success banner */
+        function showSuccess() {
+            document.getElementById("successMsg").style.display = "block";
+        }
+
+        /* Show the red error banner */
+        function showError() {
+            document.getElementById("errorMsg").style.display = "block";
+        }
+
+        /* Clear all messages and red borders */
+        function clearMessages() {
+            document.getElementById("successMsg").style.display  = "none";
+            document.getElementById("errorMsg").style.display    = "none";
+            document.getElementById("emailError").style.display  = "none";
+            document.getElementById("passwordError").style.display = "none";
+
+            document.getElementById("email").classList.remove("input-error");
+            document.getElementById("password").classList.remove("input-error");
+        }
+
+        /* Clear field error when user starts typing again */
+        document.getElementById("email").addEventListener("input", function () {
+            document.getElementById("emailError").style.display = "none";
+            this.classList.remove("input-error");
+        });
+
+        document.getElementById("password").addEventListener("input", function () {
+            document.getElementById("passwordError").style.display = "none";
+            this.classList.remove("input-error");
+        });
+
+    </script>
 
 </body>
 </html>

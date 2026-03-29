@@ -12,6 +12,8 @@
     --text-faint:  #5c4f43;
     --input-bg:    #1e1812;
     --radius:      10px;
+    --error:       #c0392b;
+    --success:     #2e7d4f;
 }
 
 /* Remove default browser spacing */
@@ -93,7 +95,7 @@ body::before {
 
 /* Title section */
 .form-header {
-    margin-bottom: 34px;
+    margin-bottom: 24px;
     animation: fadeUp 0.5s 0.08s both;
 }
 
@@ -114,7 +116,40 @@ body::before {
     text-align: center;
 }
 
-/* Input field wrapper */
+/* ------------------------------------------------
+   SUCCESS AND ERROR BANNERS
+   Hidden by default, shown by JavaScript
+------------------------------------------------ */
+
+.message {
+    display: none;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    text-align: center;
+    animation: fadeUp 0.3s ease both;
+}
+
+/* Green success banner */
+.message.success {
+    background: rgba(46, 125, 79, 0.15);
+    border: 1px solid rgba(46, 125, 79, 0.4);
+    color: #6dbf8a;
+}
+
+/* Red error banner */
+.message.error {
+    background: rgba(192, 57, 43, 0.12);
+    border: 1px solid rgba(192, 57, 43, 0.35);
+    color: #e07b72;
+}
+
+/* ------------------------------------------------
+   INPUT FIELDS
+------------------------------------------------ */
+
 .field {
     margin-bottom: 16px;
 }
@@ -160,7 +195,25 @@ body::before {
     box-shadow: 0 0 0 3px rgba(168, 132, 95, 0.1);
 }
 
-/* Remember me and forgot password row */
+/* Input with error — red border */
+.field input.input-error {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+}
+
+/* Small error text under an input */
+.field-error {
+    display: none;
+    font-size: 11px;
+    color: #e07b72;
+    margin-top: 5px;
+    padding-left: 2px;
+}
+
+/* ------------------------------------------------
+   REMEMBER ME ROW
+------------------------------------------------ */
+
 .row {
     display: flex;
     justify-content: space-between;
@@ -169,7 +222,6 @@ body::before {
     animation: fadeUp 0.5s 0.26s both;
 }
 
-/* Remember me label */
 .remember {
     display: flex;
     align-items: center;
@@ -226,7 +278,10 @@ body::before {
     color: var(--text);
 }
 
-/* Sign in button */
+/* ------------------------------------------------
+   SIGN IN BUTTON
+------------------------------------------------ */
+
 .login-btn {
     width: 100%;
     padding: 13px;
@@ -254,7 +309,10 @@ body::before {
     transform: translateY(0);
 }
 
-/* Divider line with "or continue with" */
+/* ------------------------------------------------
+   DIVIDER
+------------------------------------------------ */
+
 .divider {
     display: flex;
     align-items: center;
@@ -275,7 +333,10 @@ body::before {
     background: var(--border-dim);
 }
 
-/* Social buttons group */
+/* ------------------------------------------------
+   SOCIAL BUTTONS
+------------------------------------------------ */
+
 .social-buttons {
     display: flex;
     flex-direction: column;
@@ -284,7 +345,6 @@ body::before {
     animation: fadeUp 0.5s 0.40s both;
 }
 
-/* Each social button */
 .social-btn {
     width: 100%;
     padding: 11px 16px;
@@ -338,7 +398,10 @@ body::before {
     filter: invert(1);
 }
 
-/* Sign up link */
+/* ------------------------------------------------
+   SIGN UP LINK
+------------------------------------------------ */
+
 .signup-link {
     text-align: center;
     font-size: 12px;
@@ -357,7 +420,21 @@ body::before {
     color: var(--text);
 }
 
-/* Fade up animation */
+/* ------------------------------------------------
+   ANIMATIONS
+------------------------------------------------ */
+
+@keyframes emerge {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes fadeUp {
     from {
         opacity: 0;
